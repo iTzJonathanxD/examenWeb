@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+model Software {
+  id      Int       @id @default(autoincrement())
+  name        String
+  price      Float
+  detail  String
+  requirements       Requirement[]
+}
+
+// Define el modelo Part
+model Requirement {
+  id       Int       @id @default(autoincrement())
+  descripcion   String
+  cost       Float
+  effort       Int
+  software     Software   @relation(fields: [softwareId], references: [id])
+  softwareId   Int
+
+}
